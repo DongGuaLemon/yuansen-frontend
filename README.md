@@ -1,5 +1,26 @@
-# FrontEnd
+# vue-pwa-test
+use vue-pwa-test and write some web app.
+## Project setup
+```
+npm install
+```
 
-PWA
-A2HP
-SERVICE WORKER
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
+
+### Compiles and minifies for production
+```
+npm run build
+```
+
+### Run your tests
+```
+npm run test
+```
+
+### Lints and fixes files
+```
+npm run lint
+```
