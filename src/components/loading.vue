@@ -10,7 +10,7 @@
     <span>G</span>
     <span>.</span>
   </div>  
-  <b-modal ref="myModalRef" hide-footer centered no-close-on-backdrop="true" title="輸入驗證號碼">
+  <b-modal ref="myModalRef" hide-footer centered no-close-on-backdrop title="輸入驗證號碼">
       <div class="d-block text-center">
         <form>
         <h3>請輸入手機號碼或取驗證</h3>
