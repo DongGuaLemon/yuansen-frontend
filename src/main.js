@@ -6,6 +6,7 @@ import main from './components/main'
 import HelloWorld from './components/HelloWorld'
 import loading from './components/loading'
 import quizgame from './components/quizgame'
+import secretpage from './components/secretpage'
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -20,7 +21,8 @@ const router = new VueRouter({
     { path: '/', component: main },
     { path:'/HelloWorld',component:HelloWorld},
     { path:'/quizgame',component:quizgame},
-    { path:'/loading',component:loading}
+    { path:'/loading',component:loading},
+    { path:'/secretpage',component:secretpage}
   ]
 })
 new Vue({
