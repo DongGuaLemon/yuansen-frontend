@@ -19,12 +19,44 @@
       <button @click="social" class="btn button3">社會企業責任</button>
     </div>
     </transition>
+    <div :class="{secret:isActive}" @click="secret">
+      <b-modal ref="myModalRef" hide-footer centered no-close-on-backdrop title="登入">
+      <div>
+        <form>
+        <h3>請輸入帳號</h3>
+        <b-form-input type="text" style="margin:5px" placeholder="輸入帳號" required></b-form-input>
+          <br><br>
+        <h3>請輸入密碼</h3>
+        <b-form-input type="password" style="margin:5px" placeholder="輸入密碼" required></b-form-input>
+        <b-button class="mt-3" type="submit" variant="outline-info" block @click="submitnum">送出</b-button>
+        </form>
+      </div>
+      </b-modal>
+    </div>
   </div>  
 </template>
 <script>
 export default {
-
+data(){
+  return{
+    secertclick:0,
+    isActive:true
+  }
+},
 methods:{
+  submitnum(){
+    console.log(123)
+    this.$router.push({path:"/secretpage"})
+  },
+  secret(){
+    //login click 5 times
+    this.secertclick++;
+    if(this.secertclick==5){
+      this.$refs.myModalRef.show()
+      this.isActive=false
+      this.secertclick=0;
+    }
+  },
   social(){
     this.$router.push({path:'/HelloWorld'})
   },
@@ -80,7 +112,6 @@ methods:{
   font-size: 30px;
   color:white;
 }
-
 .fade-enter-active {
   animation: go 2s;
 }
@@ -145,5 +176,14 @@ methods:{
 .fade2-enter{
   opacity: 0;
   
+}
+.secret{
+  width: 150px;
+  height: 150px;
+  background: red;
+  opacity: 0;
+}
+h3{
+  text-align: left;
 }
 </style>
