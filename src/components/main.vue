@@ -99,7 +99,7 @@ methods:{
 }
 .text1{
   color: rgba(255, 255, 255, 0.856);
-  font-size: 60px;
+  font-size: 80px;
   font-weight: 700;
   letter-spacing: 80px;
   margin-bottom: 10px;
@@ -113,7 +113,22 @@ methods:{
   color:white;
 }
 .fade-enter-active {
+  -webkit-animation: go 2s;
   animation: go 2s;
+}
+@-webkit-keyframes go {
+  0%{
+    color: black;
+    margin-bottom:-40px; 
+  }
+  30%{
+    letter-spacing: 50px;
+    margin-bottom: -40px;
+  }
+  85%{
+    letter-spacing: 35px;
+    margin-bottom: -40px;
+  }
 }
 @keyframes go {
   0%{
@@ -133,7 +148,7 @@ methods:{
   height: 100%;
   display: inline-block;
   margin: 5%;
-  font-size: 25px;
+  font-size: 30px;
   font-family: Microsoft JhengHei;
   text-transform: uppercase;
   font-weight: 700;
@@ -141,6 +156,7 @@ methods:{
   border:1px solid #3498db;
   cursor: pointer;
   background: none;
+  -webkit-transition: 0.8s;
   transition: 0.8s;
   position: relative;
   overflow: hidden;
@@ -160,6 +176,7 @@ methods:{
   height: 0%;
   background: #3498db;
   z-index: -1;
+  -webkit-transition: 0.8s;
   transition: 0.8s;
 }
  .button1::before,.button2::before,.button3::before{
@@ -171,6 +188,7 @@ methods:{
 }
 
 .fade2-enter-active{
+  -webkit-transition: opacity 3s 2s;
   transition: opacity 3s 2s;
 }
 .fade2-enter{
@@ -185,5 +203,155 @@ methods:{
 }
 h3{
   text-align: left;
+}
+@media screen and (min-width: 350px) and (max-width: 450px){
+  .load{
+  width: 100%;
+  height: 100%;
+  background: #A8D8B9;
+  text-align: center;
+  font-family: sans-serif;
+  padding-top:30%; 
+  position: fixed;
+}
+ .text1{
+  color: rgba(255, 255, 255, 0.856);
+  font-size: 35px;
+  font-weight: 700;
+  letter-spacing: 15px;
+  margin-bottom: 10px;
+  background: #A8D8B9;
+  position: relative;
+  margin-left:5%; 
+}
+@-webkit-keyframes go {
+  0%{
+    color: black;
+    margin-bottom:-40px; 
+  }
+  30%{
+    letter-spacing: 25px;
+    margin-bottom: -40px;
+  }
+  85%{
+    letter-spacing: 8px;
+    margin-bottom: -40px;
+  }
+}
+.buttongroup button{
+  height: 100%;
+  display:block;
+  font-size: 25px;
+  font-family: Microsoft JhengHei;
+  text-transform: uppercase;
+  font-weight: 700;
+  border-radius:10px; 
+  border:1px solid #3498db;
+  cursor: pointer;
+  background: none;
+  -webkit-transition: 0.8s;
+  transition: 0.8s;
+  position: relative;
+  overflow: hidden;
+  padding: 10px;
+   margin: 0 auto;
+  padding: 10px;
+   margin-top:50px;
+} 
+}
+@media handheld and (min-height: 700px) and (max-height: 825px){
+.load{
+  padding-top:35%; 
+}
+
+}
+@media screen and (min-width: 750px) and (max-width: 851px){
+  .load{
+  width: 100%;
+  height: 100%;
+  background: #A8D8B9;
+  text-align: center;
+  font-family: sans-serif;
+  padding-top:27%; 
+  position: fixed;
+}
+ .text1{
+  color: rgba(255, 255, 255, 0.856);
+  font-size: 80px;
+  font-weight: 700;
+  letter-spacing: 40px;
+  margin-bottom: 10px;
+  background: #A8D8B9;
+  position: relative;
+  margin-left:5%; 
+}
+@-webkit-keyframes go {
+  0%{
+    color: black;
+    margin-bottom:-40px; 
+  }
+  30%{
+    letter-spacing: 45px;
+    margin-bottom: -40px;
+  }
+  85%{
+    letter-spacing: 25px;
+    margin-bottom: -40px;
+  }
+}
+.buttongroup button{
+  height: 100%;
+  display: block;
+  font-size: 45px;
+  font-family: Microsoft JhengHei;
+  text-transform: uppercase;
+  font-weight: 700;
+  border-radius:10px; 
+  border:1px solid #3498db;
+  cursor: pointer;
+  background: none;
+  -webkit-transition: 0.8s;
+  transition: 0.8s;
+  position: relative;
+  overflow: hidden;
+  margin: 0 auto;
+  padding: 10px;
+  margin-top:50px;
+}
+}
+@media screen and (min-width: 950px) and (max-width: 1200px){
+  .load{
+  padding-top:30%; 
+}
+
+  .text1{
+  color: rgba(255, 255, 255, 0.856);
+  font-size: 100px;
+  font-weight: 700;
+  letter-spacing: 30px;
+  margin-bottom: 10px;
+  background: #A8D8B9;
+  position: relative;
+  margin-left:5%; 
+}
+  .buttongroup button{
+  height: 100%;
+  display: block;
+  font-size: 60px;
+  font-family: Microsoft JhengHei;
+  text-transform: uppercase;
+  font-weight: 700;
+  border-radius:10px; 
+  border:1px solid #3498db;
+  cursor: pointer;
+  background: none;
+  -webkit-transition: 0.8s;
+  transition: 0.8s;
+  position: relative;
+  overflow: hidden;
+  margin: 0 auto;
+  padding: 10px;
+  margin-top:50px;
+}
 }
 </style>
