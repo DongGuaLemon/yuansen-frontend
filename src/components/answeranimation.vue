@@ -87,5 +87,9 @@ export default {
   -webkit-animation: up 0.3s;
   -webkit-animation-fill-mode: forwards ; 
 }
-
+@media screen and (min-width: 350px) and (max-width: 450px){
+  .wrong{
+    margin-left: 100px;
+  }
+}
 </style>
