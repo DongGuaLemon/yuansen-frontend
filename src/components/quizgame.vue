@@ -1,7 +1,7 @@
 <template>
   <div class="quizgame">
     <answeranimation ref="reference"></answeranimation>
-    <b-container>
+    <b-container class="container">
         <b-row class="justify-content-md-center mb-5">
           <b-col cols="2" md="1" lg="0"></b-col>
           <b-col class="pro" cols="8"  md="6" lg="8"> <b-progress :max="max" show-value animated><b-progress-bar class="progress w-40 mb-5" :label="'第'+counter+'題'" :value="counter"></b-progress-bar></b-progress></b-col>
@@ -245,10 +245,15 @@ p{
    .buttongroup button{
    font-size: 30px;
 }
-  .quizgame {
+.quizgame {
   height: 100%;
   width: 100%;
+}
+.container{
   margin-top: 25%;
+}
+.cardcol{
+  margin-top: -15%;
 }
 }
 </style>
