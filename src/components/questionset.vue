@@ -8,7 +8,7 @@
         <form>
           <h1>請輸入問題</h1>
           <b-form-textarea id="textarea1"
-                     v-model="text"
+                     v-model="question.text"
                      @input="maininput"
                      maxlength="30"
                      placeholder="Enter something"
@@ -19,55 +19,57 @@
      
       <div inline-block>
       <label  for="inlineFormInputName2">answer1</label>
-      <b-input class="mb-2 mr-sm-2" id="inlineFormInputName2" placeholder="答案一" required/>
+      <b-input class="mb-2 mr-sm-2" v-model="question.answer1" id="inlineFormInputName2" placeholder="答案一" required/>
       <label  for="inlineFormInputGroupUsername2">answer2</label>
-      <b-input  class="mb-2 mr-sm-2" id="inlineFormInputGroupUsername2" placeholder="答案二" required/>
+      <b-input  class="mb-2 mr-sm-2" v-model="question.answer2" id="inlineFormInputGroupUsername2" placeholder="答案二" required/>
       <label  for="inlineFormInputGroupUsername3">answer3</label>
-      <b-input  class="mb-2 mr-sm-2 " id="inlineFormInputGroupUsername3" placeholder="答案三" required/>
+      <b-input  class="mb-2 mr-sm-2 " v-model="question.answer3" id="inlineFormInputGroupUsername3" placeholder="答案三" required/>
       <label  for="inlineFormInputGroupUsername4">answer4</label>
-      <b-input  class="mb-2 mr-sm-2" id="inlineFormInputGroupUsername4" placeholder="答案四" required/>
-      
+      <b-input  class="mb-2 mr-sm-2" v-model="question.answer4" id="inlineFormInputGroupUsername4" placeholder="答案四" required/>
       </div>
     <b-form-group label="請選擇正確答案">
       <b-form-radio-group id="btnradios2"
                           buttons
                           button-variant="outline-primary"
                           size="lg"
-                          v-model="selected"
+                          v-model="question.selected"
                           :options="options"
                           name="radioBtnOutline" />
     </b-form-group>
-    <b-form-file v-model="file2" :state="Boolean(file2)" placeholder="選擇圖片" name="avatar" required accept="image/jpeg, image/png" @change="handleUpload">
+    <b-form-file v-model="question.file2" :state="Boolean(question.file2)" placeholder="選擇圖片" name="avatar" required accept="image/jpeg, image/png" @change="handleUpload">
     </b-form-file>
-    <b-button @click="againaxios" style="margin-top:10px" type="submit" size="lg" variant="success">送出</b-button>
+    <b-button @click="againaxios" style="margin-top:10px" size="lg" variant="success">送出</b-button>
      </form>
-  </div>
-    
-
-    </b-modal>
+    </div>
+  </b-modal>
 </div>
 </template>
 <script>
-
-
 export default {
   data() {
     return {
-      text: "",
+      question:{
+        text: "",
+        selected: 'radio2',
+        answer1:"",
+        answer2:"",
+        answer3:"",
+        answer4:"",
+        file2:null
+      },
       state: "valid",
-      selected: 'radio2',
       options: [
         { text: '答案1', value: 'radio1' },
         { text: '答案2', value: 'radio2' },
         { text: '答案3', value: 'radio3' },
         { text: '答案4', value: 'radio4' }
       ],
-      file2:null
+      
     };
   },
   methods: {
     maininput() {
-      let len = this.text;
+      let len = this.question.text;
       if (len.length == 30) {
         this.state = "invalid";
       }
@@ -75,11 +77,8 @@ export default {
     showModal() {
       this.$refs.myModalRef.show();
     },
-    hideModal() {
-      this.$refs.myModalRef.hide();
-    },
     file(){
-      console.log(this.file2)
+      console.log(this.question.file2)
     },
     handleUpload(avatar) {
             console.log(avatar)
@@ -91,6 +90,15 @@ export default {
     },
     againaxios(){
      console.log("emit")
+     console.log(this.question)
+     // if axios success
+    //  this.question.text="";
+    //  this.question.answer1="";
+    //  this.question.answer2="";
+    //  this.question.answer3="";
+    //  this.question.answer4="";
+    //  this.question.file2=null;
+     this.$refs.myModalRef.hide();
      this.$emit('againaxios')
     }
   }

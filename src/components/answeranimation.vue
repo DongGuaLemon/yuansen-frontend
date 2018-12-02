@@ -1,8 +1,8 @@
 <template>
-<div v-show="answerpage" class="answerpage">
-  <div class="correct" v-if="showcorrect"></div>
-  <div class="wrong" v-if="showwrong"><span class="wrongtext">X</span></div>  
-</div>
+  <div v-show="answerpage" class="answerpage">
+    <div class="correct" v-if="showcorrect"></div>
+    <div class="wrong" v-if="showwrong"><span class="wrongtext">X</span></div>  
+  </div>
 </template>
 <script>
 export default {
