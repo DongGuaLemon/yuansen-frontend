@@ -1,0 +1,73 @@
+export default[
+
+  {
+    main:"台東原生應用植物園位於哪個地區?.",
+    imgsrc:"",
+    button:[
+      {ans:"A)黃金海岸",isactive:false,id:"1"},
+      {ans:"B)花東縱谷",isactive:true,id:"2"},
+      {ans:"C)嘉南平原",isactive:false,id:"3"},
+      {ans:"D)太魯閣峽谷",isactive:false,id:"4"}
+    ]
+  },
+  {
+    main:"下列哪項”非”園區親子牧場動物?.",
+    imgsrc:"",
+    button:[
+      {ans:"A)	鴕鳥 ",isactive:false,id:"1"},
+      {ans:"B) 羊 ",isactive:false,id:"2"},
+      {ans:"C) 火雞 ",isactive:false,id:"3"},
+      {ans:"D) 灰太郎",isactive:true,id:"4"}
+    ]
+  },
+  {
+    main:"下列哪個是伴手館中庭種植的原生種植物?.",
+    imgsrc:"",
+    button:[
+      {ans:"A)蘭嶼觀音座蓮",isactive:false,id:"1"},
+      {ans:"B)鐵樹",isactive:true,id:"2"},
+      {ans:"C)玉米",isactive:false,id:"3"},
+      {ans:"D)西瓜",isactive:false,id:"4"}
+    ]
+  },
+  {
+    main:"下列”非”園區服務設施?.",
+    imgsrc:"",
+    button:[
+      {ans:"A)餐飲",isactive:false,id:"1"},
+      {ans:"B)伴手禮",isactive:false,id:"2"},
+      {ans:"C)植物說明",isactive:false,id:"3"},
+      {ans:"D)托嬰",isactive:true,id:"4"}
+    ]
+  },
+  {
+    main:"台東原生應用植物園種植的藥草蔬菜，通過哪項認證?.",
+    imgsrc:"",
+    button:[
+      {ans:"A)CAD",isactive:false,id:"1"},
+      {ans:"B)慈心有機認證",isactive:true,id:"2"},
+      {ans:"C)TTQC",isactive:false,id:"3"},
+      {ans:"D)全球有機認證",isactive:false,id:"4"}
+    ]
+  },
+  {
+    main:"園區飛碟造型建築物為哪項服務設施所在地?.",
+    imgsrc:"",
+    button:[
+      {ans:"A)伴手館",isactive:true,id:"1"},
+      {ans:"B)餐廳",isactive:false,id:"2"},
+      {ans:"C)溫室",isactive:false,id:"3"},
+      {ans:"D)廚房",isactive:false,id:"4"}
+    ]
+  },
+  {
+    main:"觀景台東側觀音山是屬於哪一座山脈?.",
+    imgsrc:"",
+    button:[
+      {ans:"A)中央山脈",isactive:false,id:"1"},
+      {ans:"B)海岸山脈",isactive:true,id:"2"},
+      {ans:"C)雪山山脈",isactive:false,id:"3"},
+      {ans:"D)阿里山脈",isactive:false,id:"4"}
+    ]
+  },
+]
