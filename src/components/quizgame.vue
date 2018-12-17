@@ -16,11 +16,11 @@
           <b-card style="background-color:rgba(0,0,0,0);width:100%;">
             <b-media no-body id="media">
               <b-media-aside vertical-align="center" >
-                <b-img id="img" class="size" :src="topic.imgsrc"/>
+                <b-img id="img" class="size" :src="topic.state[dataindex].imgsrc"/>
               </b-media-aside>
               <b-media-body class="ml-4">
                 <p>
-                  {{topic.main}}
+                  {{topic.state[dataindex].main}}
                 </p>
               </b-media-body>
             </b-media>
@@ -31,7 +31,7 @@
         <div class="buttongroup">
           <b-row class="justify-content-md-center" align-h="around">
             <b-col 
-                    v-for="(item,index) in topic.button" 
+                    v-for="(item,index) in topic.state[dataindex].button" 
                     :key="item.id"
                     :class="button_(index)"
                     > 
@@ -59,26 +59,29 @@
 }*/
 import image from '@/assets/logo.png'
 import answeranimation from './answeranimation.vue'
-import { MAIN_QUERY } from '@/graphql'
+ /* import { MAIN_QUERY } from '@/graphql'*/
+import state from '../data.js'
 export default {
   data() {
     return {
       bubbles:13,
       counter: 0,
-      max:10,
+      max:6,
       timer:10,
       nice:0,
       error:0,
+      dataindex:0,
+        // main:"台東原生應用植物園位於哪個地區?.",
+        // imgsrc:"",
+        // button:[
+        //   {ans:"(A)	黃金海岸",isactive:false,id:"1"},
+        //   {ans:"(B) 花東縱谷",isactive:true,id:"2"},
+        //   {ans:"(C) 嘉南平原",isactive:false,id:"3"},
+        //   {ans:"(D) 太魯閣峽谷",isactive:false,id:"4"}
+        // ]
       topic:{
-        main:"Cras . Cras purus odio, in faucibus.Cras purus odio, in faucibus.Cras purus odio, in faucibus.Cras purus odio, in faucibus.Cras purus odio, in faucibus.",
-        imgsrc:"",
-        button:[
-          {ans:"answer1",isactive:true,id:"1"},
-          {ans:"answer2",isactive:false,id:"2"},
-          {ans:"answer3",isactive:false,id:"3"},
-          {ans:"answer4",isactive:false,id:"4"}
-        ]
-    }
+        state,
+      }
     }
   },
   methods:{
@@ -96,6 +99,15 @@ export default {
       var vm = this;
       let timer = window.setInterval(function(){
         if(vm.timer--<=0){
+          if(vm.dataindex<6){
+            vm.dataindex++;
+          }
+          else{
+             vm.dataindex=0;
+              console.log(vm.dataindex)
+          }
+           vm.error++;
+           vm.counter++;
            vm.timer=10;
            vm.times();
            window.clearInterval(timer);
@@ -120,17 +132,22 @@ export default {
       if(isactive==true){
          this.nice++;
          console.log(this.nice)
+         this.dataindex++;
+         this.timer=10;
        }
        else if(isactive==false){
          this.error++;
           console.log(this.error)
+          this.dataindex++;
+          this.timer=10;
        }
       if(this.counter<10){
         this.counter++;
       }
-       if(this.nice+this.error==10){
+       if(this.dataindex==7){
           console.log("finsh")
           this.$router.push({name:'endingpage',params:{nice:this.nice}})
+          this.dataindex=0;
         }
     },
     button_(index){
@@ -139,10 +156,20 @@ export default {
      handler: function handler(event) {
       console.log(1233)
        this.$router.push({path:'/'})
+       
     }
   },
   mounted(){
     this.times();
+    console.log(state)
+  },
+  watch:{
+    dataindex:function(){
+      if(this.dataindex==6){
+         this.$router.push({name:'endingpage',params:{nice:this.nice}})
+         console.log(this.dataindex)
+      }
+    }
   },
   components:{
     answeranimation
@@ -328,6 +355,8 @@ li{
   margin-left:15%;
   margin-right:15%;
   height: 100%;
+  width: 200px;
+  text-align: center;
   font-size: 25px;
   font-family: Microsoft JhengHei;
   text-transform: uppercase;
@@ -382,8 +411,10 @@ p{
   display: block;
    /*-moz-transition:0s 1s;
    transition:0s 1s;*/ 
+   text-align: left !important;
    margin: 0 auto;
-   font-size: 20px;
+   width: 150px;
+   font-size: 17px;
 } 
 .button_0,.button_1,.button_2,.button_3{
    margin-bottom: 25px;
@@ -420,8 +451,10 @@ p{
    margin-left: -5px;
 }
   .buttongroup button{
-   font-size: 25px;
+   font-size: 20px;
+   width: 165px;
    margin-top: 25px;
+   text-align: left;
 }
 }
 @media screen and (min-width: 750px) and (max-width: 851px){
