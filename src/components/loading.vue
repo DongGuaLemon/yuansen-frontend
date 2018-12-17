@@ -9,19 +9,23 @@
     <span>N</span>
     <span>G</span>
     <span>.</span>
-    <div class="test1"></div>
+    <div class="loader loader5">
+      <svg width="150px" height="150px" viewBox="0 0 80 80" fill="transparent">
+        <circle cx="40" cy="40" r="8" stroke="#4FB95C"/>
+      </svg>
+    </div>
   </div> 
-   
   <b-modal ref="myModalRef" id="modal"  hide-footer centered no-close-on-backdrop title="Sign In">
       <div class="d-block text-center">
         <form>
         <h3 class="modalh3">請輸入手機號碼獲取驗證</h3>
-          <input v-model="phone" class="modalinp" type="text" style="margin:5px" placeholder="輸入手機號碼" required/>
+          <input v-model="phone" class="modalinp" type="text" style="margin:5px" placeholder="輸入手機號碼"/>
           <b-button id="modalbutn" class="mt-3" type="submit" variant="outline-danger" block @click="subphone" style="display:block;margin:0 auto;">獲得驗證碼</b-button>
           <br><br>
         <h3 class="modalh3">請輸入驗證代碼</h3>
-        <input v-model="verification" class="modalinp" type="text" style="margin:5px" placeholder="輸入驗證碼" required/>
-        <b-button id="modalbutn" class="mt-3" type="submit" variant="outline-danger"  block @click="submitnum">送出驗證碼</b-button>
+        <input v-model="verification" class="modalinp" type="text" style="margin:5px" @keyup.enter="submitnum1()" placeholder="輸入驗證碼" required/>
+        <p v-show="verificationshow">驗證碼輸入錯誤</p>
+        <b-button id="modalbutn" class="mt-3" variant="outline-danger" block @click="submitnum">送出驗證碼</b-button>
         </form>
       </div>
       
@@ -29,20 +33,20 @@
  </div>
 </template>
 <script>
-import { SIGNUP_MUTATION } from '@/graphql'
+/*import { SIGNUP_MUTATION } from '@/graphql'*/
 export default {
   data(){
     return{
       userId:"aabb",
       phone:"",
-      verification:""
+      verification:"",
+      verificationshow:false
     }
   },
   methods:{
     model(){
       setTimeout(() => {
         this.$refs.myModalRef.show()
-        console.log('123')
       }, 4000);
     },
     subphone(){
@@ -59,8 +63,23 @@ export default {
           console.log(error)
           })}
     },
+    submitnum1(verification){
+       console.log(this.verification)
+      if(this.verification=="123"){
+        this.$router.push({ path: '/quizgame'})
+        console.log(this.verification)
+      }
+       else{
+        this.verificationshow=true
+      }
+    },
     submitnum(){
-      this.$router.push({ path: '/quizgame'})
+      if(this.verification=="123"){
+        this.$router.push({ path: '/quizgame'})
+      }
+      else{
+        this.verificationshow=true
+      }
     }
   },
   mounted(){
@@ -69,6 +88,39 @@ export default {
 }
 </script>
 <style>
+#modalbutn:hover{
+  background-color: #f9a03f;
+}
+#modalbutn{
+  border-color: #f9a03f;
+  color: black;
+}
+@keyframes loader5 {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+    stroke-width: 3;
+  }
+  60% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(5);
+    stroke-width: 0;
+  }
+}
+
+.loader5 svg circle {
+  transform-origin: center center;
+  transform: scale(1);
+  animation: loader5 1.5s linear infinite;
+}
+.loader span {
+  font-size: 12px;
+  position: absolute;
+  bottom: 16px;
+}
 #modal___BV_modal_header_{
   background-color:#f9a03f
 }
@@ -87,6 +139,7 @@ export default {
 .loading span{
   font-family:Arial, Helvetica, sans-serif;
   font-size: 80px;
+  font-weight: 800;
   color: rgba(255,255,255,.1);
   display: inline-block;
   transition:all .5s;
@@ -162,73 +215,23 @@ animation-delay: .8s;
     transform: translateY(0);
   }
 }
-.test1{
-  width:100px;
-    height:50px;
-    background:#808a87;
-    position:relative;
-    animation:TestMove 2s infinite; /*IE*/
-    -moz-animation:TestMove 2s infinite; /*FireFox*/
-    -webkit-animation:TestMove 2s infinite; /*Chrome, Safari*/
-    border-radius: 50px;
-}
-@-webkit-keyframes TestMove{
-    from {left:27%;}
-    0%{
-      transform:scaleX(1)
-    }
-    50%{
-     transform:scaleX(1.5)
-    }
-    100%{
-     transform:scaleX(1)
-    }
-    to {left:68%;}
-}
 @media screen and (min-width: 350px) and (max-width: 450px){
   .loading span{
-    font-size: 56px;
-  }
-  .test1{
-     animation:TestMove 2s infinite; /*IE*/
-    -moz-animation:TestMove 2s infinite; /*FireFox*/
-    -webkit-animation:TestMove 2s infinite; /*Chrome, Safari*/
-  }
-  @-webkit-keyframes TestMove{
-    from {left:10%;}
-    0%{
-      -webkit-transform:scaleX(1)
-    }
-    50%{
-     -webkit-transform:scaleX(1.5)
-    }
-    100%{
-     -webkit-transform:scaleX(1)
-    }
-    to {left:65%;}
-}
-@keyframes TestMove{
-    from {left:10%;}
-    0%{
-      transform:scaleX(1)
-    }
-    50%{
-     transform:scaleX(1.5)
-    }
-    100%{
-     transform:scaleX(1)
-    }
-    to {left:65%;}
+  font-family:Arial, Helvetica, sans-serif;
+  font-size: 50px;
+  font-weight: 800;
+  color:#fd8607;
+  display: inline-block;
+  transition:all 0s;
+  animation: animate 0s 1;
+  -webkit-transition:all 0s;
+  -webkit-animation: animate 0s 1; 
 }
 }
 @media screen and (min-width: 750px) and (max-width: 851px){
-  .test1{
-     animation:TestMove 2s infinite; /*IE*/
-    -moz-animation:TestMove 2s infinite; /*FireFox*/
-    -webkit-animation:TestMove 2s infinite; /*Chrome, Safari*/
-  }
   .loading span{
     font-size: 80px;
+    font-weight: 800;
   }
   .modalh3{
     font-size: 35px;
@@ -239,41 +242,11 @@ animation-delay: .8s;
   .modalinp{
     font-size: 30px;
   }
-  @-webkit-keyframes TestMove{
-    from {left:10%;}
-    0%{
-      -webkit-transform:scaleX(1)
-    }
-    50%{
-     -webkit-transform:scaleX(1.5)
-    }
-    100%{
-     -webkit-transform:scaleX(1)
-    }
-    to {left:80%;}
-}
-@keyframes TestMove{
-    from {left:10%;}
-    0%{
-      transform:scaleX(1)
-    }
-    50%{
-     transform:scaleX(1.5)
-    }
-    100%{
-     transform:scaleX(1)
-    }
-    to {left:80%;}
-}
 }
 @media screen and (min-width: 950px) and (max-width: 1200px){
-    .test1{
-     animation:TestMove 2s infinite; /*IE*/
-    -moz-animation:TestMove 2s infinite; /*FireFox*/
-    -webkit-animation:TestMove 2s infinite; /*Chrome, Safari*/
-  }
   .loading span{
     font-size: 80px;
+    font-weight: 800;
   }
   .modalh3{
     font-size: 35px;
@@ -287,31 +260,5 @@ animation-delay: .8s;
   .modal-title{
     font-size: 40px;
   }
-  @-webkit-keyframes TestMove{
-    from {left:10%;}
-    0%{
-      -webkit-transform:scaleX(1)
-    }
-    50%{
-     -webkit-transform:scaleX(1.5)
-    }
-    100%{
-     -webkit-transform:scaleX(1)
-    }
-    to {left:80%;}
-}
-@keyframes TestMove{
-    from {left:10%;}
-    0%{
-      transform:scaleX(1)
-    }
-    50%{
-     transform:scaleX(1.5)
-    }
-    100%{
-     transform:scaleX(1)
-    }
-    to {left:80%;}
-}
 }
 </style>
