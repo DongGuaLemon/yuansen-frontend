@@ -71,6 +71,7 @@ export default {
       nice:0,
       error:0,
       dataindex:0,
+      isactive1:false,
         // main:"台東原生應用植物園位於哪個地區?.",
         // imgsrc:"",
         // button:[
@@ -108,6 +109,7 @@ export default {
           }
            vm.error++;
            vm.counter++;
+           vm.$refs.reference.answer(vm.isactive1);
            vm.timer=10;
            vm.times();
            window.clearInterval(timer);
