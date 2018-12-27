@@ -17,13 +17,13 @@
   </div> 
   <b-modal ref="myModalRef" id="modal"  hide-footer centered no-close-on-backdrop title="Sign In">
       <div class="d-block text-center">
-        <form>
+        <form @submit.prevent="onSubmit($event)">
         <h3 class="modalh3">請輸入手機號碼獲取驗證</h3>
           <input v-model="phone" class="modalinp" type="text" style="margin:5px" placeholder="輸入手機號碼"/>
           <b-button id="modalbutn" class="mt-3" type="submit" variant="outline-danger" block @click="subphone" style="display:block;margin:0 auto;">獲得驗證碼</b-button>
           <br><br>
         <h3 class="modalh3">請輸入驗證代碼</h3>
-        <input v-model="verification" class="modalinp" type="text" style="margin:5px" @keyup.enter="submitnum1()" placeholder="輸入驗證碼" required/>
+        <input v-model="verification" class="modalinp" type="text" style="margin:5px" @keyup.enter="submitnum"  placeholder="輸入驗證碼" required/>
         <p v-show="verificationshow">驗證碼輸入錯誤</p>
         <b-button id="modalbutn" class="mt-3" variant="outline-danger" block @click="submitnum">送出驗證碼</b-button>
         </form>
@@ -63,16 +63,6 @@ export default {
           console.log(error)
           })}
     },
-    submitnum1(verification){
-       console.log(this.verification)
-      if(this.verification=="123"){
-        this.$router.push({ path: '/quizgame'})
-        console.log(this.verification)
-      }
-       else{
-        this.verificationshow=true
-      }
-    },
     submitnum(){
       if(this.verification=="123"){
         this.$router.push({ path: '/quizgame'})
@@ -80,6 +70,10 @@ export default {
       else{
         this.verificationshow=true
       }
+    },
+    onSubmit(event){
+      //提交事件不重新載入頁面
+      event.preventDefault()
     }
   },
   mounted(){
