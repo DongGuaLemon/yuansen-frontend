@@ -99,21 +99,25 @@ export default {
     times(){
       var vm = this;
       let timer = window.setInterval(function(){
-        if(vm.timer--<=0){
-          if(vm.dataindex<6){
-            vm.dataindex++;
+          if(vm.$route.path=='/quizgame'){
+          if(vm.timer--<=0){
+            if(vm.dataindex<6){
+              vm.dataindex++;
+            }
+            else{
+              vm.dataindex=0;
+                console.log(vm.dataindex)
+            }
+            vm.error++;
+            vm.counter++;
+            vm.$refs.reference.answer(vm.isactive1);
+            vm.timer=10;
+            vm.times();
+          }
           }
           else{
-             vm.dataindex=0;
-              console.log(vm.dataindex)
+            return
           }
-           vm.error++;
-           vm.counter++;
-           vm.$refs.reference.answer(vm.isactive1);
-           vm.timer=10;
-           vm.times();
-           window.clearInterval(timer);
-        }
       },1000)
     },
     sub(index,uid,isactive){
@@ -159,6 +163,9 @@ export default {
       console.log(1233)
        this.$router.push({path:'/'})
        
+    },
+    test(){
+      console.log(123123123)
     }
   },
   mounted(){
@@ -169,8 +176,9 @@ export default {
     dataindex:function(){
       if(this.dataindex==6){
          this.$router.push({name:'endingpage',params:{nice:this.nice}})
-         console.log(this.dataindex)
+         console.log(this.dataindex,123)
       }
+     
     }
   },
   components:{

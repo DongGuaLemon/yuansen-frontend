@@ -23,9 +23,11 @@
           <b-button id="modalbutn" class="mt-3" type="submit" variant="outline-danger" block @click="subphone" style="display:block;margin:0 auto;">獲得驗證碼</b-button>
           <br><br>
         <h3 class="modalh3">請輸入驗證代碼</h3>
-        <input v-model="verification" class="modalinp" type="text" style="margin:5px" @keyup.enter="submitnum"  placeholder="輸入驗證碼" required/>
-        <p v-show="verificationshow">驗證碼輸入錯誤</p>
-        <b-button id="modalbutn" class="mt-3" variant="outline-danger" block @click="submitnum">送出驗證碼</b-button>
+        <div @keyup.enter="submitnum">
+          <input v-model="verification" class="modalinp" type="text" style="margin:5px"   placeholder="輸入驗證碼" required/>
+          <p v-show="verificationshow">驗證碼輸入錯誤</p>
+          <b-button id="modalbutn" class="mt-3" variant="outline-danger" block @click="submitnum">送出驗證碼</b-button>
+        </div>
         </form>
       </div>
       
