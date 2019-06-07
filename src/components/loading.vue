@@ -19,9 +19,13 @@
       <div class="d-block text-center">
         <form @submit.prevent="onSubmit($event)">
         <h3 class="modalh3">請輸入手機號碼獲取驗證</h3>
-          <input v-model="phone" class="modalinp" type="text" style="margin:5px" placeholder="輸入手機號碼"/>
+        <div>
+          <input v-model="phone" class="modalinp" type="text" style="margin:5px" placeholder="輸入手機號碼" required/>
           <b-button id="modalbutn" class="mt-3" type="submit" variant="outline-danger" block @click="subphone" style="display:block;margin:0 auto;">獲得驗證碼</b-button>
           <br><br>
+        </div>
+        </form>
+        <form @submit.prevent="onSubmit($event)">
         <h3 class="modalh3">請輸入驗證代碼</h3>
         <div @keyup.enter="submitnum">
           <input v-model="verification" class="modalinp" type="text" style="margin:5px"   placeholder="輸入驗證碼" required/>
@@ -36,6 +40,8 @@
 </template>
 <script>
 /*import { SIGNUP_MUTATION } from '@/graphql'*/
+import axios from 'axios'
+import Url from '../axiosurl'
 export default {
   data(){
     return{
@@ -52,18 +58,35 @@ export default {
       }, 4000);
     },
     subphone(){
-      if(this.phone != ""){
-      this.$apollo
-          .mutate({
-            mutation:SIGNUP_MUTATION,
-            variables: {
-                       phone:this.phone 
-                    }
-          }).then(data=>{
-          console.log(data)
-          }).catch(error=>{
-          console.log(error)
-          })}
+      // if(this.phone != ""){
+      // this.$apollo
+      //     .mutate({
+      //       mutation:SIGNUP_MUTATION,
+      //       variables: {
+      //                  phone:this.phone 
+      //               }
+      //     }).then(data=>{
+      //     console.log(data)
+      //     }).catch(error=>{
+      //     console.log(error)
+      //     })}
+      let vm = this;
+      axios({
+        method: 'POST',
+        url:`${Url.axiosURL()}Getphonenumber`,
+        responseType: 'json',
+        headers: {
+          'Content-type': 'application/json',
+          //'Authorization': 'Client-ID' + id
+          },
+          data:{
+            phone:vm.phone
+          }
+        }).then(function(response){
+            console.log(response.data);
+        }).catch(function(error){
+            console.log(error)
+        })
     },
     submitnum(){
       if(this.verification=="123"){

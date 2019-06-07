@@ -20,7 +20,7 @@
               </b-media-aside>
               <b-media-body class="ml-4">
                 <p>
-                  {{topic.state[dataindex].main}}
+                  {{Question.question}}
                 </p>
               </b-media-body>
             </b-media>
@@ -31,13 +31,12 @@
         <div class="buttongroup">
           <b-row class="justify-content-md-center" align-h="around">
             <b-col 
-                    v-for="(item,index) in topic.state[dataindex].button" 
+                    v-for="(item,index) in answerlist" 
                     :key="item.id"
                     :class="button_(index)"
                     > 
               <button
-                    @click="sub(index,item.id,item.isactive)" 
-                    :disabled="item.correct" 
+                    @click="sub(index,item.id)" 
                     :uid="item.id"
                     class="btn" 
                     
@@ -57,10 +56,12 @@
 /*let removeadd = function(e){
   this.classList.remove('playing')
 }*/
+import Url from '../axiosurl'
+import axios from 'axios'
 import image from '@/assets/logo.png'
 import answeranimation from './answeranimation.vue'
+import state from '../data'
  /* import { MAIN_QUERY } from '@/graphql'*/
-import state from '../data.js'
 export default {
   data() {
     return {
@@ -70,7 +71,7 @@ export default {
       timer:10,
       nice:0,
       error:0,
-      dataindex:0,
+      dataindex:1,
       isactive1:false,
         // main:"台東原生應用植物園位於哪個地區?.",
         // imgsrc:"",
@@ -82,7 +83,9 @@ export default {
         // ]
       topic:{
         state,
-      }
+      },
+      Question:{},
+      answerlist:[{},{},{},{}]
     }
   },
   methods:{
@@ -100,19 +103,20 @@ export default {
       var vm = this;
       let timer = window.setInterval(function(){
           if(vm.$route.path=='/quizgame'){
-          if(vm.timer--<=0){
-            if(vm.dataindex<6){
-              vm.dataindex++;
-            }
-            else{
-              vm.dataindex=0;
-                console.log(vm.dataindex)
-            }
+          vm.timer=vm.timer-1;
+          if(vm.timer==0){ 
+              if(vm.dataindex<7){
+                vm.dataindex++;
+                vm.question();
+              }
+              else{
+                vm.dataindex=0;
+              } 
+            vm.$refs.reference.answer(false);
             vm.error++;
             vm.counter++;
-            vm.$refs.reference.answer(vm.isactive1);
+            //vm.$refs.reference.answer(vm.isactive1);
             vm.timer=10;
-            vm.times();
           }
           }
           else{
@@ -120,41 +124,57 @@ export default {
           }
       },1000)
     },
-    sub(index,uid,isactive){
-      console.log(index)
-      const key = document.querySelector(`.btn[uid="${uid}"]`)//獲得button的class和uid的屬性
-      console.log(key)
-      console.log(isactive)
-      this.$refs.reference.answer(isactive);//呼叫綁定refs dom的子元素的function並帶值
-      key.classList.toggle('playing')//添加class屬性playing配合css
-       key.addEventListener('transitionend',function(e){ //監聽transitionend(判斷css transition事件結束)，移除playing屬性，要呼叫vue的this要使用arrow function。
-           setTimeout(() => {
-            this.classList.remove('playing')
-           },700)
-        })
-      /*function removeadd(e){
-        this.classList.remove('playing')
-      }*/
-      if(isactive==true){
-         this.nice++;
-         console.log(this.nice)
-         this.dataindex++;
-         this.timer=10;
-       }
-       else if(isactive==false){
-         this.error++;
-          console.log(this.error)
-          this.dataindex++;
-          this.timer=10;
-       }
-      if(this.counter<10){
-        this.counter++;
-      }
-       if(this.dataindex==7){
-          console.log("finsh")
-          this.$router.push({name:'endingpage',params:{nice:this.nice}})
-          this.dataindex=0;
+    sub(index,uid){
+      let vm = this;
+      axios({
+        method: 'POST',
+        url:`${Url.axiosURL()}answercheck`,
+        responseType: 'json',
+        headers: {
+          'Content-type': 'application/json',
+          //'Authorization': 'Client-ID' + id
+          },
+          data:{
+            ans:uid,
+            id:vm.dataindex
+          }
+        }).then(function(response){
+            console.log(response.data.data);
+            vm.isactive=response.data.data
+            console.log(index)
+            const key = document.querySelector(`.btn[uid="${uid}"]`)//獲得button的class和uid的屬性
+            console.log(key)
+            console.log(vm.isactive)
+            vm.$refs.reference.answer(vm.isactive);//呼叫綁定refs dom的子元素的function並帶值
+            key.classList.toggle('playing')//添加class屬性playing配合css
+            key.addEventListener('transitionend',function(e){ //監聽transitionend(判斷css transition事件結束)，移除playing屬性，要呼叫vue的this要使用arrow function。
+                setTimeout(() => {
+                  this.classList.remove('playing')
+                },700)
+              })
+        /*function removeadd(e){
+          this.classList.remove('playing')
+        }*/
+        if(vm.isactive==true){
+          vm.nice++;
+          console.log(vm.nice)
+          vm.dataindex++;
+          vm.timer=10;
+          vm.question();
         }
+        else if(vm.isactive==false){
+          vm.error++;
+            console.log(vm.error)
+            vm.dataindex++;
+            vm.timer=10;
+            vm.question();
+        }
+        if(vm.counter<10){
+          vm.counter++;
+        }
+        }).catch(function(error){
+            console.log(error)
+        })
     },
     button_(index){
       return "button_"+index;
@@ -164,19 +184,49 @@ export default {
        this.$router.push({path:'/'})
        
     },
-    test(){
-      console.log(123123123)
+     question(){
+      let vm = this;
+      axios({
+        method: 'POST',
+        url:`${Url.axiosURL()}Getquestion`,
+        responseType: 'json',
+        headers: {
+          'Content-type': 'application/json',
+          //'Authorization': 'Client-ID' + id
+          },
+          data:{
+            number:vm.dataindex
+          }
+        }).then(function(response){
+            vm.Question=response.data.data[0];
+            var a =0;
+            for(var i in response.data.data[0]){
+              if(i!=="question"&&i!=="ID"){
+                vm.answerlist[a]["ans"]=response.data.data[0][i]
+                vm.answerlist[a]["id"]=i
+                a++;
+              }
+            }
+            //vm.answerlist.button=response.data.data[0];
+            // delete vm.answerlist.button["question"]
+            // delete vm.answerlist.button["ID"]
+          
+            console.log(vm.Question)
+            console.log(vm.answerlist)
+        }).catch(function(error){
+            console.log(error)
+        })
     }
   },
   mounted(){
     this.times();
-    console.log(state)
+    this.question();
   },
   watch:{
     dataindex:function(){
       if(this.dataindex==6){
          this.$router.push({name:'endingpage',params:{nice:this.nice}})
-         console.log(this.dataindex,123)
+         console.log(this.dataindex)
       }
      
     }
